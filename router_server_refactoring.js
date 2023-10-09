@@ -8,14 +8,23 @@ const server = http.createServer((req, res) =>{
     if(path==="/user"){
         user(req, res)
     }else if(path === "/feed"){
-    }else{
         feed(req, res)
+    }else{
+        res.statusCode = 404;
+        res.end("404 page not found");
     }
 
 }).listen(8000, ()=> console.log("라우터 정상 작동중"))
 
 const user = (req, res)=>{
-    res.end("[USER] name : 앤디 / age : 30")
+    let userInfo = url.parse(req.url, true).query;
+    if (userInfo.name!=undefined || userInfo.age!=undefined){
+        res.end(`[USER] name : ${userInfo.name} / age : ${userInfo.age}`)
+    }else{
+        res.statusCode = 404;
+        res.end("404 page not found");
+    }
+    
 }
 
 const feed = (req, res)=>{
