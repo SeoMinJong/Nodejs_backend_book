@@ -10,8 +10,7 @@ const server = http.createServer((req, res) =>{
     }else if(path === "/feed"){
         feed(req, res)
     }else{
-        res.statusCode = 404;
-        res.end("404 page not found");
+        notFound(req, res)
     }
 
 }).listen(8000, ()=> console.log("라우터 정상 작동중"))
@@ -21,8 +20,7 @@ const user = (req, res)=>{
     if (userInfo.name!=undefined || userInfo.age!=undefined){
         res.end(`[USER] name : ${userInfo.name} / age : ${userInfo.age}`)
     }else{
-        res.statusCode = 404;
-        res.end("404 page not found");
+        notFound(req, res)
     }
     
 }
@@ -35,4 +33,10 @@ const feed = (req, res)=>{
         <li>picture3</li>
     </ul>
     `)
+}
+
+const notFound = (req, res)=>{
+    res.statusCode = 404;
+    res.end("404 page not found");
+
 }
