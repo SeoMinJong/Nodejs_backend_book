@@ -15,6 +15,7 @@ app.post("/posts", (req, res)=>{
     const {title, name, text} = req.body;
 
     posts.push({id: posts.length+1, title, name, text, created: Date()});
+    console.log(posts);
     res.json({title, name, text});
 });
 
@@ -25,7 +26,7 @@ app.delete("/posts/:id", (req, res)=>{
     posts = filteredPosts;
 
     if(isLengthChanged){
-        res.jons("OK");
+        res.json("OK");
         return;
     }
     
