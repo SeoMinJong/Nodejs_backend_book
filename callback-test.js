@@ -14,7 +14,7 @@ function saveDB(user, callback){
     return callback(user);
 };
 
-function getResult(user, callback){
+function sendEmail(user, callback){
     console.log(`email to ${user.email}`);
     return callback(user);
 };
