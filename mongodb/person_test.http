@@ -1,0 +1,28 @@
+@server = http://localhost:3000
+
+### GET 요청
+GET {{server}}/person
+
+### POST 요청
+POST {{server}}/person
+Content-Type: application/json
+
+{
+    "name":"Andy Park",
+    "age":30,
+    "email":"andy@naver.com"
+}
+
+### GET target 요청
+GET {{server}}/person/andy@naver.com
+
+### PUT 요청
+PUT {{server}}/person/andy@naver.com
+Content-Type: application/json
+
+{
+    "age":32
+}
+
+### DELETE 요청
+DELETE {{server}}/person/andy@naver.com
