@@ -14,4 +14,8 @@ app.get("/write", (req, res)=>{
     res.render("write", {title: "테스트 게시판"})
 })
 
+app.get("/detail", (req, res)=>{
+    res.render("detail", {title: "타이틀"})
+})
+
 app.listen(3000);
