@@ -14,12 +14,12 @@ async function main(){
 
         console.log("MongoDB 접속");
         const collection = client.db('test').collection('person');
-
+        
         await collection.insertOne({name:'Andy', age:30});
         console.log("Andy 문서 추가");
 
-        const documents = await collection.find({name:'Andy'});
-        console.log('찾은 문서 :',documents);
+        const documents = await collection.find({name:'Andy'}).toArray();
+        console.log('Andy 문서 :',documents);
 
         await collection.updateOne({name:'Andy'}, {$set:{age:31}});
         console.log("Andy 문서 업데이트");
