@@ -20,8 +20,18 @@ const postService = require("./services/post-service");
 
 let collection;
 
-app.get("/", (req, res)=>{
-    res.render("home", { title : "테스트 게시판"});
+app.get("/", async (req, res)=>{
+    const page = parseInt(req.query.page) || 1;
+    const search = req.query.search || "";
+    try{
+        const [posts, paginator] = await postService.list(collection, page, search);
+
+        res.render("home", {title:"test notice board", search, paginator, posts});
+    }
+    catch(err){
+        console.log(err);
+    }
+    res.render("home", { title : "test notice board"});
 });
 
 app.get("/write", (req, res)=>{
