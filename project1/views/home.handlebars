@@ -1,2 +1,42 @@
-<h2>{{title}}</h2>
-<p>{{message}}</p>
+{{!-- head area --}}
+<h1>{{title}}</h1>
+
+<input type="text" name="search" id="search" value="" size="50" placeholder="검색어를 입력하세요.">
+<button>검색</button>
+<br />
+<a href="/write">금쓰기</a>
+<br />
+
+{{!-- list area --}}
+<div>
+    <table>
+        <thead> {{!-- table에서 헤드를 정리할 때 사용 (table head) --}}
+            <tr>
+                <th width="50%">제목</th>
+                <th>작성자</th>
+                <th>조회수</th>
+                <th>등록일</th>
+            </tr>
+        </thead>
+        <tbody> {{!-- table에서 본문을 정리할 때 사용 (table body) --}}
+            <tr>
+                <td><a href="/detail">타이틀</a></td>
+                <td align="center">작성자이름</td>
+                <td align="center">999999</td>
+                <td align="center">2023.10.24</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+{{!-- footer container --}}
+<div>
+    <a>&lt;&lt;</a>
+    <a>&lt;</a>
+    <a>1</a>
+    <a>2</a>
+    <a>3</a>
+    <a>4</a>
+    <a>&gt;</a>
+    <a>&gt;&gt;</a>
+</div>
