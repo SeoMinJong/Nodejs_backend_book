@@ -21,7 +21,7 @@
         <tbody> {{!-- table에서 본문을 정리할 때 사용 (table body) --}}
             {{#each posts}}
             <tr>
-                <td><a href="/detail/{{id}}">{{title}}</a></td>
+                <td><a href="/detail/{{_id}}">{{title}}</a></td>
                 <td>{{write}}</td>
                 <td>{{hits}}</td>
                 <td>{{dateString createdDt}}</td> {{!--  --}}

@@ -1,4 +1,5 @@
 const paginator = require("../utils/paginator");
+const { ObjectId } = require("mongodb");
 
 async function list(collection, page, search){
     const perPage = 10;
@@ -18,8 +19,20 @@ async function writePost(collection, post){
     return await collection.insertOne(post);
 }
 
+const projectOption = {
+    projection:{
+        password: 0,
+        "comments.password":0
+    }
+}
+
+async function getDetailPost(collection, id){
+    return await collection.findOneAndUpdate({_id:ObjectId(id)},{$inc: { hits:1 }}, projectOption);
+}
+
 
 module.exports = {
     list,
-    writePost
+    writePost,
+    getDetailPost
 }

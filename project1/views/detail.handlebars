@@ -1,18 +1,20 @@
 {{!-- main section --}}
 <h1>{{title}}</h1>
+{{#with post}}
 <h2 class="text-xl">제목</h2>
 <div>
-    작성자 : <b>realcom</b>
+    작성자 : <b>{{name}}</b>
 </div>
 <div>
-    조회수 : 999999 | 작성일시 : 2023-10-24 15:59:00
+    조회수 : {{hits}} | 작성일시 : {{createdDt}}
     <button onclick="modifyPost()">수정</button>
     <button onclick="deletePost()">수정</button>
 </div>
 
 <div>
-    <pre>분문입니다!</pre>
+    <pre>{{content}}!</pre>
 </div>
+{{/with}}
 
 {{!-- comment write section --}}
 <section>
@@ -55,3 +57,9 @@
         <a href="/">목록으로</a>
     </div>
 </footer>
+
+<script>
+    async function modifyPost(){}
+    async function deletePost(){}
+</script>
+

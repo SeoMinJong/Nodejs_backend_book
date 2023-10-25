@@ -25,6 +25,7 @@ app.get("/", async (req, res)=>{
     const search = req.query.search || "";
     try{
         const [posts, paginator] = await postService.list(collection, page, search);
+        console.log(posts)
 
         res.render("home", {title:"test notice board", search, paginator, posts});
     }
@@ -44,8 +45,9 @@ app.post("/write", async (req, res)=>{
     res.redirect(`detail/${result.insertedId}`);
 })
 
-app.get("/detail", (req, res)=>{
-    res.render("detail", {title: "타이틀"})
+app.get("/detail/:id", async (req, res)=>{
+    const result = await postService.getDetailPost(collection, req.params.id)
+    res.render("detail", {title: "타이틀", post: result.value})
 })
 
 app.listen(3000, async()=>{
