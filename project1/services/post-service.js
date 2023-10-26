@@ -49,9 +49,21 @@ async function updatePost(collection, id, post){
 }
 
 async function deleteContent(collection, post){
-    const {id, password} = post
-    return await collection.deleteOne({_id:ObjectId(id), password: password})
+    const {id, password} = post;
+    console.log('id, password :',id," ",password)
+    return await collection.deleteOne({_id:ObjectId(id), password});
 }
+
+async function deleteComment(collection, post){
+    console.log(post);
+    const {id, idx, password} = post;
+    console.log('start db find')
+    const result = await collection.findOne({_id:ObjectId(id), 
+        comments: {$elemMatch: {idx:parseInt(idx), password:password}}}
+        ,projectOption);
+    return result
+}
+
 
 module.exports = {
     list,
@@ -61,4 +73,5 @@ module.exports = {
     getPostByIdAndPassword,
     updatePost,
     deleteContent,
+    deleteComment,
 }

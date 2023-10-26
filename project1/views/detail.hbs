@@ -70,7 +70,7 @@
     }
     
     async function modifyPost() {
-        const password = prompt("패스워드를 입력해주세요.");
+        const password = prompt("패스워드를 입력해주세요");
         if (!password){
             return;
         }
@@ -86,7 +86,7 @@
         if (data.isExist){
             document.location = "/modify/{{post._id}}"
         }else{
-            alert("패스워드가 올바르지 않습니다.");
+            alert("패스워드가 올바르지 않습니다");
         }
     }
 
@@ -96,7 +96,7 @@
     }
 
     async function deletePost(){
-        const password = prompt("패스워드를 입력해주세요.");
+        const password = prompt("패스워드를 입력해주세요");
         
         if(!password){
             return;
@@ -111,11 +111,34 @@
         console.log(data)
 
         if(!data.isSuccess){
-            alert("삭제에 실패하였습니다. 패스워드를 확인하여주세요.")
+            alert("삭제에 실패하였습니다. 패스워드를 확인하여주세요")
             reutrn;
         }else{
             document.location="/";
         }
 
+    }
+
+    async function deleteComment(idx){
+        const password = prompt("비밀번호를 입력해주세요")
+        if(!password){
+            return;
+        }
+
+        // delete comemnt api
+        const result = await fetch("/delete-comment", {
+            ...deleteOption,
+            body: JSON.stringify({id:"{{post._id}}", idx, password})
+        });
+
+        const data = await result.json();
+        // redirect detail page
+        if (!data.isSuccess){
+            alert("삭제에 실패하였습니다. 패스워드를 확인하여주세요");
+            return;
+        }
+
+        alert("삭제되었습니다");
+        document.location.reload();
     }
 </script>

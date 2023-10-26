@@ -121,9 +121,24 @@ app.post("/write-comment", async (req, res)=>{
             createdDt: new Date().toString(),
         }]
     }
-
+    
     await postService.updatePost(collection, id, post);
     return res.redirect(`detail/${id}`);
+})
+
+app.delete("/delete-comment", async  (req, res)=>{
+    const {id, idx, password} = req.body;
+
+    const post = await postService.deleteComment(collection, {id, idx, password});
+
+    if(!post){
+        return res.json({isSuccess:false}) 
+    }
+
+    post.comments = post.comments.filter((comment => comment.idx != idx));
+    postService.updatePost(collection, id, post);
+
+    return res.json({isSuccess:true});
 })
 
 app.listen(3000, async()=>{
