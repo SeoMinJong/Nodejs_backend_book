@@ -2,7 +2,10 @@ const express = require("express");
 const handlebars = require("express-handlebars");
 const app = express();
 
-app.engine('hbs', handlebars.engine);
+app.engine("hbs", handlebars.create({
+    helpers: require('./config/handlebars-helpers')
+}).engine
+);
 
 app.set("view engine", "hbs");
 app.set("views", __dirname + "/views");
@@ -22,12 +25,12 @@ app.get("/", async (req, res)=>{
     try{
         const [posts, paginator] = await postService.list(collection, page, search);
 
-        res.render("home", {title:"test notice board", search, paginator, posts});
+        await res.render("home", {title:"test notice board", search, paginator, posts});
     }
     catch(err){
+        res.render("home", {title:"test notice board"});
         console.log(err);
     }
-    res.render("home", { title : "test notice board"});
 });
 
 app.get("/write", (req, res)=>{
@@ -57,6 +60,7 @@ app.post("/modify", async (req, res)=>{
 
 app.post("/write", async (req, res)=>{
     const post = req.body;
+
     const result = await postService.writePost(collection, post);
     res.redirect(`detail/${result.insertedId}`);
 })
@@ -83,7 +87,5 @@ app.listen(3000, async()=>{
     const mongodbClient = await mongodbConnection();
 
     collection = mongodbClient.db().collection("post");
-    let a = await collection.count({title:new RegExp("", "i")});
-    console.log(a)
     console.log("MongoDB Connection");
 });

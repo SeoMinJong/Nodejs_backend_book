@@ -16,6 +16,7 @@ async function list(collection, page, search){
 async function writePost(collection, post){
     post.hits = 0;
     post.createdDt = new Date().toISOString();
+    console.log(post)
     return await collection.insertOne(post);
 }
 
