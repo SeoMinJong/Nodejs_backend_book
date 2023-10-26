@@ -88,7 +88,7 @@ app.delete("/delete", async (req, res)=>{
 
         const result = await postService.deleteContent(collection, {id, password})
         
-        if(result.deletedCount !== 1){
+        if(result.acknowledged){
             return res.json({ isSuccess : true})
         }else{
             return res.json({ isSuccess : false })
