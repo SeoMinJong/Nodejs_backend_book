@@ -16,7 +16,6 @@ async function list(collection, page, search){
 async function writePost(collection, post){
     post.hits = 0;
     post.createdDt = new Date().toISOString();
-    console.log(post)
     return await collection.insertOne(post);
 }
 
@@ -49,6 +48,11 @@ async function updatePost(collection, id, post){
     return await collection.updateOne({_id:ObjectId(id)}, toUpdatePost)
 }
 
+async function deleteContent(collection, post){
+    const {id, password} = post
+    return await collection.deleteOne({_id:ObjectId(id), password: password})
+}
+
 module.exports = {
     list,
     writePost,
@@ -56,4 +60,5 @@ module.exports = {
     getPostById,
     getPostByIdAndPassword,
     updatePost,
+    deleteContent,
 }

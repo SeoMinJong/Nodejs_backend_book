@@ -82,10 +82,27 @@ app.post("/check-password", async (req, res)=>{
     }
 })
 
+app.delete("/delete", async (req, res)=>{
+    try{
+        const {id, password} = req.body;
+
+        const result = await postService.deleteContent(collection, {id, password})
+        
+        if(result.deletedCount !== 1){
+            return res.json({ isSuccess : true})
+        }else{
+            return res.json({ isSuccess : false })
+        }
+    }catch(err){
+        console.log(err)
+        return res.json({ isSuccess : false})
+    }
+    
+})
+
 app.listen(3000, async()=>{
     console.log("Server Started");
     const mongodbClient = await mongodbConnection();
-
     collection = mongodbClient.db().collection("post");
     console.log("MongoDB Connection");
 });
