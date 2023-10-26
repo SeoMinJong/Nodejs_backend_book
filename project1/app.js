@@ -2,13 +2,9 @@ const express = require("express");
 const handlebars = require("express-handlebars");
 const app = express();
 
-const hbs = handlebars.create({
-    helpers: require("./config/handlebars-helpers"),
-});
+app.engine('hbs', handlebars.engine);
 
-app.engine('handlebars', hbs.engine);
-
-app.set("view engine", "handlebars");
+app.set("view engine", "hbs");
 app.set("views", __dirname + "/views");
 
 app.use(express.json());
@@ -46,9 +42,6 @@ app.get("/modify/:id", async (req, res)=>{
 
 app.post("/modify", async (req, res)=>{
     const {id, title, name, password, content} = req.body;
-    console.log("app modify :",id)
-    console.log('app modify id type :', typeof(id))
-    console.log('app modify id len :', id.length)
 
     const post = {
         title,

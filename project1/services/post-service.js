@@ -39,11 +39,6 @@ async function getPostById(collection, id){
 }
 
 async function updatePost(collection, id, post){
-    try {
-        const objectId = ObjectId(id);
-    } catch (error) {
-        console.error(error.stack);
-    }
     const toUpdatePost = {
         $set: {
             ...post,
