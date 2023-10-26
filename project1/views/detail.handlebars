@@ -1,7 +1,7 @@
 {{!-- main section --}}
-<h1>{{title}}</h1>
+<h1><a href="/">{{title}}</a></h1>
 {{#with post}}
-<h2 class="text-xl">제목</h2>
+<h2 class="text-xl">{{title}}</h2>
 <div>
     작성자 : <b>{{name}}</b>
 </div>
@@ -78,6 +78,7 @@
         });
 
         const data = await result.json();
+        console.log("detail data :",data)
 
         if (data.isExist){
             document.location = "/modify/{{post._id}}"

@@ -1,16 +1,18 @@
-<h1>[{{ title }}]</h1>
+<h1>[{{title}}] 글 {{#if (eq mode "create")}} 작성 {{else}} 수정 {{/if}}</h1>
 <div>
-    <form name="boardForm" method="post" action="/write">
+    <form name="boardForm" method="post" {{#if (eq mode "create")}} action="/write" {{else}} action="/modify" {{/if}}>
         {{!-- title --}}
+        {{#if (eq mode "modify")}}
+        <input type="hidden" name="id" value="{{post._id}}">
+        {{/if}}
         <div>
             <label>제목</label>
-            <input type="text" name="title" placeholder="제목을 작성해주세요" value="" />
+            <input type="text" name="title" placeholder="제목을 작성해주세요" value="{{post.title}}" />
         </div>
-
         {{!-- user --}}
         <div>
             <label>이름</label>
-            <input type="text" name="name" placeholder="이름을 작성해주세요" value="" />
+            <input type="text" name="name" placeholder="이름을 작성해주세요" value="{{post.name}}" />
         </div>
         <div>
             <label>비밀번호</label>
@@ -20,7 +22,9 @@
         {{!-- main text --}}
         <div>
             <label>글을 작성해주세요</label><br />
-            <textarea placeholder="글을 작성해주세요" name="content" cols="50" rows="10"></textarea>
+            <textarea placeholder="글을 작성해주세요" name="content" cols="50" rows="10" value=>
+                {{post.content}}
+            </textarea>
         </div>
         <br />
         <button type="submit">저장</button>

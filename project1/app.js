@@ -25,7 +25,6 @@ app.get("/", async (req, res)=>{
     const search = req.query.search || "";
     try{
         const [posts, paginator] = await postService.list(collection, page, search);
-        console.log(posts)
 
         res.render("home", {title:"test notice board", search, paginator, posts});
     }
@@ -36,7 +35,31 @@ app.get("/", async (req, res)=>{
 });
 
 app.get("/write", (req, res)=>{
-    res.render("write", {title: "테스트 게시판"})
+    res.render("write", {title: "테스트 게시판", mode: "create"});
+})
+
+app.get("/modify/:id", async (req, res)=>{
+    const id = req.params.id;
+    const post = await postService.getPostById(collection, id);
+    res.render("write", {title:"테스트 게시판", mode:"modify", post: post})
+})
+
+app.post("/modify", async (req, res)=>{
+    const {id, title, name, password, content} = req.body;
+    console.log("app modify :",id)
+    console.log('app modify id type :', typeof(id))
+    console.log('app modify id len :', id.length)
+
+    const post = {
+        title,
+        name,
+        password,
+        content,
+        createdDt: new Date().toString(),
+    }
+
+    const result = postService.updatePost(collection, id, post);
+    res.redirect(`/detail/${id}`);
 })
 
 app.post("/write", async (req, res)=>{
@@ -50,10 +73,24 @@ app.get("/detail/:id", async (req, res)=>{
     res.render("detail", {title: "타이틀", post: result.value})
 })
 
+app.post("/check-password", async (req, res)=>{
+    const {id, password} = req.body;
+
+    const post = await postService.getPostByIdAndPassword(collection, {id, password});
+
+    if (!post){
+        return res.status(404).json({ isExist: false });
+    }else{
+        return res.json({ isExist: true });
+    }
+})
+
 app.listen(3000, async()=>{
     console.log("Server Started");
     const mongodbClient = await mongodbConnection();
 
     collection = mongodbClient.db().collection("post");
+    let a = await collection.count({title:new RegExp("", "i")});
+    console.log(a)
     console.log("MongoDB Connection");
 });
