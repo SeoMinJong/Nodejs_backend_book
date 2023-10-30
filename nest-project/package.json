@@ -1,0 +1,17 @@
+{
+  "name": "nest-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@nestjs/common": "^10.2.7",
+    "@nestjs/platform-express": "^10.2.7",
+    "reflect-metadata": "^0.1.13",
+    "typescript": "^5.2.2"
+  }
+}
