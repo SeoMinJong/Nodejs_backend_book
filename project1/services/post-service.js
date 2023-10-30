@@ -1,4 +1,5 @@
 import paginator from "../utils/paginator.js";
+import {createHashedPassword, verifyPassword} from "./password-module.js"
 import { ObjectId } from "mongodb";
 
 let query
@@ -17,10 +18,13 @@ export async function list(collection, page, search){
 export async function writePost(collection, post){
     post.hits = 0;
     post.createdDt = new Date().toISOString();
+    let hashed_pass = await createHashedPassword(post.password)
+    post.password = hashed_pass.hashedPassword
+    post.salt = hashed_pass.salt
     return await collection.insertOne(post);
 }
 
-export const projectOption = {
+const projectOption = {
     projection:{
         password: 0,
         "comments.password":0
@@ -32,7 +36,15 @@ export async function getDetailPost(collection, id){
 }
 
 export async function getPostByIdAndPassword(collection, {id, password}){
-    return await collection.findOne({_id: ObjectId(id), password: password}, projectOption);
+    const find_salt_password = await getPassword(collection, id, password)
+    const isCheckPass = await verifyPassword(password, find_salt_password.salt, find_salt_password.password)
+
+    if(isCheckPass){
+        return await collection.findOne({_id: ObjectId(id), password: find_salt_password.password}, projectOption);
+    }else{
+        alert("비밀번호를 확인해주세요")
+    }
+    
 }
 
 export async function getPostById(collection, id){
@@ -51,8 +63,9 @@ export async function updatePost(collection, id, post){
 
 export async function deleteContent(collection, post){
     const {id, password} = post;
-    console.log('id, password :',id," ",password)
-    return await collection.deleteOne({_id:ObjectId(id), password});
+    const {encodingPass, _} = await getPassword(collection, id, password);
+
+    return await collection.deleteOne({_id:ObjectId(id), encodingPass})
 }
 
 export async function deleteComment(collection, post){
@@ -62,4 +75,11 @@ export async function deleteComment(collection, post){
         comments: {$elemMatch: {idx:parseInt(idx), password:password}}}
         ,projectOption);
     return result
+}
+
+async function getPassword(collection, id, password){
+    // password 복호화
+    const find_salt_password = await collection.findOne({_id: ObjectId(id)}, {salt:1, password:1})
+
+    return find_salt_password
 }
