@@ -1,21 +1,35 @@
-const express = require("express");
-const handlebars = require("express-handlebars");
+import path from 'path';
+import express from 'express';
+import handlebars from 'express-handlebars';
+import {lengthOfList, eq, dateString} from './config/handlebars-helpers.js';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 const app = express();
 
 app.engine("hbs", handlebars.create({
-    helpers: require('./config/handlebars-helpers')
+    extname: '.hbs',
+    defaultLayout: 'main',
+    helpers: {
+        lengthOfList, 
+        eq, 
+        dateString,
+    }
 }).engine
 );
 
 app.set("view engine", "hbs");
-app.set("views", __dirname + "/views");
+app.set("views", path.join(__dirname + '/views'));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
-const mongodbConnection = require("./config/mongodb-connection");
-const postService = require("./services/post-service");
+import {mongodbConnection} from './config/mongodb-connection.js';
+import * as postService from './services/post-service.js';
 
 let collection;
 

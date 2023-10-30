@@ -1,7 +1,7 @@
-const lodash = require("lodash");
+import lodash from "lodash"
 const PAGE_LIST_SIZE = 10;
 
-module.exports = ({totalCount, page, perPage = 10})=>{
+export default ({totalCount, page, perPage = 10})=>{
     const PER_PAGE = perPage;
     const totalPage = Math.ceil(totalCount / PER_PAGE); // totalpage는 총 post 수를 PER_PAGE로 나눈 몫값으로 예제의 경우 10개 단위로 몫이 나온다.
 
