@@ -1,14 +1,48 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from './blog.service';
+import { Controller, Param, Body, Delete, Get, Post, Put } from "@nestjs/common";
+import { BlogService } from "./blog.service";
 
-@Controller()
-export class AppController {
-  constructor(private readonly appService: AppService) {}
-
+@Controller('blog')
+export class BlogContoller{
+  blogService: BlogService
+  // constructor는 class에서 인스턴스를 초기화하고 생성할 수 있는 함수로 this로 BlogService(자신)을 참조하여 blogService 객체를 생성할 수 있게 한다.
+  constructor(){
+    this.blogService = new BlogService();
+  }
+  
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  getAllPosts(){
+    console.log("all post get");
+    return this.blogService.getAllPosts();
+  }
+
+  @Post()
+  createPost(@Body() post:any){
+    console.log('post create');
+    this.blogService.createPost(post);
+    
+    return 'sueccss'
+  }
+
+  @Get('/:id')
+  getPost(@Param('id') id:string){
+    console.log('get post');
+
+    return this.blogService.getPost(id)
+  }
+
+  @Delete('/:id')
+  deletePost(@Param('id') id:String){
+    console.log('delete post');
+    this.blogService.deletePost(id);
+
+    return 'sueccss'
+  }
+
+  @Put('/:id')
+  updatePost(@Param('id') id, @Body() post:any){
+    console.log(`${id} post update`);
+    console.log(post)
+
+    return this.blogService.updatePost(id, post);
   }
 }
-
-export class BlogContoller {}
