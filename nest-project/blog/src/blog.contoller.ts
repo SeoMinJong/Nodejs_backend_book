@@ -3,11 +3,8 @@ import { BlogService } from "./blog.service";
 
 @Controller('blog')
 export class BlogContoller{
-  blogService: BlogService
   // constructor는 class에서 인스턴스를 초기화하고 생성할 수 있는 함수로 this로 BlogService(자신)을 참조하여 blogService 객체를 생성할 수 있게 한다.
-  constructor(){
-    this.blogService = new BlogService();
-  }
+  constructor(private blogService: BlogService){}
   
   @Get()
   async getAllPosts(){

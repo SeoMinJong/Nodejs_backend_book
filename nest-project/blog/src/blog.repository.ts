@@ -1,3 +1,4 @@
+import { Injectable } from "@nestjs/common";
 import { readFile, writeFile } from "fs/promises"; // await를 사용하여 Promise객체를 출력해야 하기 때문에 fs/promise 모듈로 접근해야한다.
 import { PostDto } from "./blog.model";
 
@@ -9,6 +10,7 @@ export interface BlogRepogistory{
     updatePost(id: String, postDto:PostDto);
 }
 
+@Injectable()
 export class BlogFileRepository implements BlogRepogistory{
     FILE_NAME = './src/blog.data.json';
 
