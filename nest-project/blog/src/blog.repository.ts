@@ -23,7 +23,13 @@ export class BlogFileRepository implements BlogRepogistory{
 
     async createPost(postDto: PostDto) {
         const posts = await this.getAllPost();
-        const id = posts.length + 1;
+        let id;
+        if(posts.length <= 0){
+            id=1
+        }else{
+            const post = posts[posts.length-1]
+            id = post.id + 1;
+        }   
         const createPost = {id, ...postDto, CreatedDt : new Date()}
         posts.push(createPost);
         await writeFile(this.FILE_NAME, JSON.stringify(posts));
