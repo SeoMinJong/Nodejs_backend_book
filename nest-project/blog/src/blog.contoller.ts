@@ -10,9 +10,9 @@ export class BlogContoller{
   }
   
   @Get()
-  getAllPosts(){
+  async getAllPosts(){
     console.log("all post get");
-    return this.blogService.getAllPosts();
+    return await this.blogService.getAllPosts();
   }
 
   @Post()
@@ -24,10 +24,10 @@ export class BlogContoller{
   }
 
   @Get('/:id')
-  getPost(@Param('id') id:string){
+  async getPost(@Param('id') id:string){
     console.log('get post');
 
-    return this.blogService.getPost(id)
+    return await this.blogService.getPost(id);
   }
 
   @Delete('/:id')
