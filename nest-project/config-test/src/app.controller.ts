@@ -11,4 +11,11 @@ export class AppController {
     const message = this.configService.get('MESSAGE')
     return message;
   }
+
+  @Get('service-url')
+  getUrl():string{
+    const url = this.configService.get('SERICE_URL')
+    console.log(url)
+    return url
+  }
 }
