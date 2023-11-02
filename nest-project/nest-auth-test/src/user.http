@@ -36,3 +36,13 @@ Content-Type: application/json
     "password":"112233",
     "email":"jkk0011"
 }
+
+### register check
+POST {{server}}/auth/register
+Content-Type: application/json
+
+{
+    "username":"bad realcom",
+    "password":"111333",
+    "email":"tjalswhd11345@gmail.com"
+}

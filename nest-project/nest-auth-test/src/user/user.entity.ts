@@ -14,6 +14,6 @@ export class User{
     @Column()
     username: String
 
-    @Column({default:true})
-    createdDt: Date = new Date();
+    @Column({type: 'datetime', default: () => 'CURRENT_TIMESTAMP'})
+    createdDt: Date;
 }
