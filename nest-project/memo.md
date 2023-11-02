@@ -17,8 +17,14 @@ nodejs에서 DB 정보와 같은 민감한 정보를 환경변수인 .env을 통
 .env의 위치는 기본적으로 프로젝트 root 폴더에 위치하며 만약 위치를 수정하고 싶다면 코드에 나온것처럼 envFilePath에 해당 경로를 작성하면 된다.
 .env은 변수=값 형태로 작성하면 되고 isGlobal을 통해 모듈과 하위모듈 전역에서 사용할 수 있도록 할 수 있다. (본 코드에서는 사용하지 않았다.)
 물론 .gitgnore에 .env이나 *.env을 설정하여 환경변수 파일이 push되지 않도록 주의해야한다.
-
 +) import후 해당 모듈에서 사용할 경우 주의점
 nestjs는 typescript를 기반하고 있기때문에 비동기함수를 적용하지 않는다면 임포트한 ConfigModule이 임포트되지 않고 .env의 변수들을 불러올 수 있다.
 때문에 ./nest-project/blog/src/app.module.ts 코드에서 확인할 수 있다시피 MongooseModule을 연결하기 위해 MongooseModule.forRootAsync를 통해 ConfigModule이 먼저 임포트될 수 있도록 구성되었다.
 (처음엔 그냥 forRoot를 사용해서 undefined를 띄우는 불상사가 생겼다.)
+
+4. sqlDatabase 다루기
+4-1. typeorm
+typeorm이란 typescript와 javascript에서 사용되는 sqldatebase의 데이터를 변환하여 사용할 수 있게 해주는 모듈이다.
+Repository를 선언해서 해당하는 entity(schema structure)를 상속받아 해당하는 데이터를 find(), findOne(), create() 등의 함수로 데이터를 다룬다.
+root module에 선언 후 각 module에서 사용할 entity와 함께 선언하고 사용하면 되고 실제 사용될 Service에서 Repository를 생성해서 필요한 entity를 상속받아 데이터를 다룬다.
+
