@@ -13,6 +13,8 @@ console.log(`process.env.NODE_ENV: ${process.env.NODE_ENV}입니다.`)
     isGlobal:true,
     envFilePath:`${process.cwd()}/envs/${process.env.NODE_ENV}.env`,
     load:[config],
+    cache:true,
+    expandVariables: true,
   }), 
     WeatherModule],
   controllers: [AppController],
