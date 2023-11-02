@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { WeatherModule } from './weather/weather.module';
+import config from './configs/config'
 
 console.log(`${process.cwd()}/envs/${process.env.NODE_ENV}.env`)
 console.log(`process.env.NODE_ENV: ${process.env.NODE_ENV}입니다.`)
@@ -10,7 +11,8 @@ console.log(`process.env.NODE_ENV: ${process.env.NODE_ENV}입니다.`)
 @Module({
   imports: [ConfigModule.forRoot({
     isGlobal:true,
-    envFilePath:`${process.cwd()}/envs/${process.env.NODE_ENV}.env`
+    envFilePath:`${process.cwd()}/envs/${process.env.NODE_ENV}.env`,
+    load:[config],
   }), 
     WeatherModule],
   controllers: [AppController],

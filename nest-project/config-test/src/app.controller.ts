@@ -18,4 +18,12 @@ export class AppController {
     console.log(url)
     return url
   }
+
+  @Get('db-info')
+  getDbIngo():String{
+    console.log(this.configService.get('logLevel'));
+    console.log(this.configService.get('apiVersion'));
+
+    return this.configService.get('dbInfo');
+  }
 }
