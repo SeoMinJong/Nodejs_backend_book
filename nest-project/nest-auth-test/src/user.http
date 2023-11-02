@@ -26,3 +26,13 @@ content-Type: application/json
 
 ### 게시글 삭제
 DELETE {{server}}/user/deleteUser/tjalswhd11345@gmail.com
+
+### 잘못된 생성 요청
+POST  {{server}}/user/createUser
+Content-Type: application/json
+
+{
+    "username":"realcom",
+    "password":"112233",
+    "email":"jkk0011"
+}
