@@ -6,13 +6,13 @@ export class User{
     id?: number
 
     @Column({unique:true})
-    email: String
+    email: string
 
     @Column()
-    password: String
+    password: string
     
     @Column()
-    username: String
+    username: string
 
     @Column({type: 'datetime', default: () => 'CURRENT_TIMESTAMP'})
     createdDt: Date;
