@@ -55,3 +55,16 @@ Content-Type: application/json
     "email": "tjalswhd11345@gmail.com",
     "password": "111333"
 }
+
+### login2
+POST {{server}}/auth/login
+Content-Type: application/json
+
+{
+    "email":"tjalswhd11345@gmail.com",
+    "password": "111333"
+}
+
+
+### Guard test
+GET {{server}}/auth/test-guard
