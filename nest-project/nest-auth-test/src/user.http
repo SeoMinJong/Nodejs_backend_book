@@ -20,7 +20,7 @@ content-Type: application/json
 
 {
     "username":"new realcom",
-    "password":"332211",
+    "password":"111333",
     "email":"tjalswhd11345@naver.com"
 }
 
@@ -68,3 +68,27 @@ Content-Type: application/json
 
 ### Guard test
 GET {{server}}/auth/test-guard
+
+
+### login3
+POST {{server}}/auth/login3
+Content-Type: application/json
+
+{
+    "email":"tjalswhd11345@gmail.com",
+    "password": "111333"
+}
+
+
+### login3 error
+POST {{server}}/auth/login3
+Content-Type: application/json
+
+{
+    "email":"tjalswhd11345@gmail.com",
+    "password": "123123"
+}
+
+
+### Guard test2
+GET {{server}}/auth/test-guard2
