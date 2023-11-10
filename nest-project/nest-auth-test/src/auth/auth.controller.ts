@@ -63,7 +63,7 @@ export class AuthController {
 
     @UseGuards(GoogleAuthGuard)
     @Get('to-google')
-    async googleAith(@Request() req) {}
+    async googleAuth(@Request() req) {}
 
     @UseGuards(GoogleAuthGuard)
     @Get('google')
