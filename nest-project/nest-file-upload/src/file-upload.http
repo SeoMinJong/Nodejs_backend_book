@@ -10,3 +10,15 @@ Content-Disposition: form-data; name="file"; filename="test.txt"
 
 일반 텍스트 테스트
 --test-file--
+
+
+### image-upload-test
+POST {{server}}/file-upload
+Content-Type: multipart/form-data; boundary=image-file-upload
+
+--image-file-upload
+Content-Disposition: form-data; name=file; filename="mamnul.jpg"
+Content-Type: image/jpeg
+
+< manul.jpg
+--image-file-upload--
