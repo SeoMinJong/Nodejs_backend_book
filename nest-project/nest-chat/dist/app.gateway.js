@@ -56,6 +56,12 @@ let RoomGateway = class RoomGateway {
         });
         socket.join(room);
     }
+    handleMessageToRoom(socket, data) {
+        const { message, nickname, room } = data;
+        socket.broadcast.to(room).emit('message', {
+            message: `${nickname}: ${message}`
+        });
+    }
 };
 exports.RoomGateway = RoomGateway;
 __decorate([
@@ -75,6 +81,12 @@ __decorate([
     __metadata("design:paramtypes", [socket_io_1.Socket, Object]),
     __metadata("design:returntype", void 0)
 ], RoomGateway.prototype, "handleJoinRoom", null);
+__decorate([
+    (0, websockets_1.SubscribeMessage)('message'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [socket_io_1.Socket, Object]),
+    __metadata("design:returntype", void 0)
+], RoomGateway.prototype, "handleMessageToRoom", null);
 exports.RoomGateway = RoomGateway = __decorate([
     (0, websockets_1.WebSocketGateway)({ namespace: 'room' }),
     __metadata("design:paramtypes", [ChatGateway])

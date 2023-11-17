@@ -38,4 +38,12 @@ export class RoomGateway{
         });
         socket.join(room)
     }
+
+    @SubscribeMessage('message')
+    handleMessageToRoom(socket: Socket, data: any): void{
+        const {message, nickname, room} = data;
+        socket.broadcast.to(room).emit('message', {
+            message: `${nickname}: ${message}`
+        });
+    }
 }
