@@ -8,8 +8,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ChatGateway = void 0;
+exports.RoomGateway = exports.ChatGateway = void 0;
 const websockets_1 = require("@nestjs/websockets");
 const socket_io_1 = require("socket.io");
 let ChatGateway = class ChatGateway {
@@ -32,4 +35,48 @@ __decorate([
 exports.ChatGateway = ChatGateway = __decorate([
     (0, websockets_1.WebSocketGateway)({ namespace: 'chat' })
 ], ChatGateway);
+let RoomGateway = class RoomGateway {
+    constructor(chatGateway) {
+        this.chatGateway = chatGateway;
+        this.rooms = [];
+    }
+    handleMessage(data) {
+        const { nickname, room } = data;
+        this.chatGateway.server.emit('notice', {
+            message: `${nickname}님이 ${room}방을 개설하셨습니다.`
+        });
+        this.rooms.push(room);
+        this.server.emit('rooms', this.rooms);
+    }
+    handleJoinRoom(socket, data) {
+        const { nickname, room, toLeaveRoom } = data;
+        socket.leave(toLeaveRoom);
+        this.chatGateway.server.emit('notice', {
+            message: `${nickname}님이 ${room}방에 입장하셨습니다.`
+        });
+        socket.join(room);
+    }
+};
+exports.RoomGateway = RoomGateway;
+__decorate([
+    (0, websockets_1.WebSocketServer)(),
+    __metadata("design:type", socket_io_1.Server)
+], RoomGateway.prototype, "server", void 0);
+__decorate([
+    (0, websockets_1.SubscribeMessage)('createRoom'),
+    __param(0, (0, websockets_1.MessageBody)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], RoomGateway.prototype, "handleMessage", null);
+__decorate([
+    (0, websockets_1.SubscribeMessage)('joinRoom'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [socket_io_1.Socket, Object]),
+    __metadata("design:returntype", void 0)
+], RoomGateway.prototype, "handleJoinRoom", null);
+exports.RoomGateway = RoomGateway = __decorate([
+    (0, websockets_1.WebSocketGateway)({ namespace: 'room' }),
+    __metadata("design:paramtypes", [ChatGateway])
+], RoomGateway);
 //# sourceMappingURL=app.gateway.js.map

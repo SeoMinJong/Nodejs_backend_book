@@ -18,7 +18,7 @@ exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [],
         controllers: [app_controller_1.AppController],
-        providers: [app_service_1.AppService, app_gateway_1.ChatGateway],
+        providers: [app_service_1.AppService, app_gateway_1.ChatGateway, app_gateway_1.RoomGateway],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map

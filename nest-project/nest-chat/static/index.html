@@ -6,10 +6,26 @@
         <title>Simple Nest Chat</title>
     </head>
     <body>
-        <div id="chat">Nest Chat</div>
+        <h2>Simple Nest Chat</h2>
+
+        <div>
+            <h2>채팅방 목록</h2>
+            <ul id="rooms"></ul>
+        </div>
+        
+        <div>
+            <h2>공지</h2>
+            <div id="notice"></div>
+        </div>
+
+        <div>
+            <h2>채팅 내역</h2>
+            <div id="chat"></div>
+        </div>
 
         <input type="text" id="message" placeholder="메세지를 입력해주세요">
         <button onclick="sendMessage()">전송</button>
+        <button onclick="createRoom()">방만들기</button>
     </body>
     <script src="https://code.jquery.com/jquery-3.6.1.slim.js"></script>
     <script src="http://localhost:3000/socket.io/socket.io.js"></script>
